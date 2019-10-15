@@ -1,0 +1,58 @@
+importsubprocess,time
+from selenium import webdriver
+fromselenium.webdriver.common.keys import Keys
+fromselenium.webdriver.support.ui import WebDriverWait
+fromselenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+fromselenium.common.exceptions import TimeoutException
+
+subprocess.run("E:\start.exe")
+driver = webdriver.Chrome()
+driver.get("http://localhost:28016/vpnkeylocal/#/V3sq1E3o17AnFDiXKpWVKeNMSh3a1IO7VY/login/")
+delay = 20 # seconds
+try:
+myElem = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.CLASS_NAME, 'login_inner')))
+print("Page is ready!")
+exceptTimeoutException:
+print("Loading took too much time!")
+time.sleep(0.5)
+
+driver.find_element_by_xpath("//a[contains(text(),'PIN 4')]").click()
+input_elems = driver.find_elements_by_xpath("//input")
+print('input_elems')
+print(len(input_elems))
+input_elems[0].clear()
+input_elems[0].send_keys("361474")
+button_elems = driver.find_elements_by_xpath("//button")
+print('button_elems')
+print(len(button_elems))
+button_elems[0].click()
+
+time.sleep(5)
+
+#***Настройки***
+setting_button_1 = driver.find_element_by_xpath("//div[@id='header']/div[2]/div/ul/li[3]/a")
+setting_button_1.click()
+time.sleep(1)
+setting_button_2 = driver.find_element_by_xpath("//div[@id='header']/div[2]/div[2]/section/div[1]/div[4]")
+setting_button_2.click()
+
+time.sleep(1)
+
+#***Создание сертификата***
+in_elems = driver.find_elements_by_xpath("//*[@id='content']/div[1]/div/div/div/div/div/div/div[1]/form/table/tbody/tr/td[3]/input")
+print('in_elems')
+print(len(in_elems))
+spisok = ['"Актив"', '"Актив"','','Москва','Москва','ул.Шарикоподшипниковская, д.1','304500116000156','1112223334445','112233445566',
+          'Иванов','Иван Иванович','ivanov@mail.ru','Логистика','Курьер','11223344556']
+for i inrange(0,15):
+in_elems[i].click()
+in_elems[i].send_keys(spisok[i])
+
+in_16 = driver.find_element_by_xpath("//div[@id='content']/div[1]/div/div/div/div/div/div/div[1]/form/table/tbody/tr[19]/td[3]/div/ul/li[2]/button").click()
+in_17 = driver.find_element_by_xpath("//div[@id='content']/div[1]/div/div/div/div/div/div/div[1]/form/table/tbody/tr[20]/td[3]/div/ul/li[3]/button").click()
+in_18 = driver.find_element_by_xpath("//*[@id='content']/div[1]/div/div/div/div/div/div/div[1]/form/table/tbody/tr[21]/td[3]/button").click()
+
+#***Выйти***
+exit_button = driver.find_element_by_xpath("//div[@id='header']/div/div/a")
+exit_button.click()
